@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="jakarta.faces.core">
+    <head>
+        <title>Kalkulator BMI</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <h:form>
+            <h1>Wprowadź masę w kg oraz wzrost w cm</h1>
+            
+            <!-- Pola do wprowadzania danych -->
+            <h:outputLabel for="masa" value="Masa: "/>
+            <h:inputText id="masa" value="#{BMI.masa}" required="true" />
+            <br />
+            
+            <h:outputLabel for="wysokosc" value="Wysokość: "/>
+            <h:inputText id="wysokosc" value="#{BMI.wysokosc}" required="true" />
+            <br />
+            
+            <!-- Przycisk do obliczania BMI -->
+            <h:commandButton value="Oblicz" action="#{BMI.obliczBMI}" />
+            <br />
+            
+            <!-- Wyświetlenie wyniku BMI -->
+            <h:outputText value="Twoje BMI: #{BMI.obliczoneBMI}" 
+                          rendered="#{BMI.obliczoneBMI > 0}" />
+            <br />
+            
+            <!-- Przycisk do resetowania -->
+            <h:commandButton value="Reset" action="#{BMI.resetuj}" />
+            <br />
+            
+            <!-- Przycisk do dodawania BMI do tabeli -->
+            <h:commandButton value="Dodaj do listy" action="#{BMI_Table.addBMI}" 
+                             rendered="#{BMI.obliczoneBMI > 0}" />
+            <br />
+            
+            <!-- Tabela z historią BMI -->
+            <h:dataTable value="#{BMI_Table.BMIs}" var="bmi" border="1">
+                <h:column>
+                    <f:facet name="header">Masa (kg)</f:facet>
+                    #{bmi.masa}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Wysokość (cm)</f:facet>
+                    #{bmi.wysokosc}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">BMI</f:facet>
+                    #{bmi.obliczoneBMI}
+                </h:column>
+            </h:dataTable>
+            
+                        <!-- Przycisk do dodawania BMI do tabeli -->
+            <h:commandButton value="Usuń listę" action="#{BMI_Table.remove}" />
+        </h:form>
+    </body>
+</html>
